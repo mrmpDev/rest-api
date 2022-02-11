@@ -27,7 +27,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password', 'remember_token', 'token'
+        'password', 'remember_token', 'token', 'email_verified_at'
     ];
 
     /**
@@ -38,4 +38,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function articles()
+    {
+        return $this->hasMany(Article::class);
+    }
 }
