@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -18,7 +19,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name', 'email', 'password', 'token'
+        'name', 'email', 'password', 'api_token'
     ];
 
     /**
@@ -27,7 +28,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password', 'remember_token', 'token', 'email_verified_at'
+        'password', 'remember_token', 'api_token', 'email_verified_at'
     ];
 
     /**
@@ -43,5 +44,22 @@ class User extends Authenticatable
     public function articles()
     {
         return $this->hasMany(Article::class);
+    }
+
+
+    public function generateToken()
+    {
+        $token = Str::random(50);
+        $this->api_token = $token;
+        $this->save();
+        return $token;
+    }
+
+    public function logout()
+    {
+
+        $this->token_api = null;
+        $this->save();
+        return $this;
     }
 }

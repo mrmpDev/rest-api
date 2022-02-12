@@ -11,6 +11,8 @@ class UserController extends Controller
 {
     public function index(Request $request)
     {
+//        auth()->guard('api')->user();
+//        dd(auth()->guard('api')->user());
         return User::all();
     }
 
