@@ -21,6 +21,7 @@ class ArticleResource extends JsonResource
             'user' => $this->whenLoaded('user', function () {
                 return new UserResource($this->user);
             }),
+
         ];
     }
 }
