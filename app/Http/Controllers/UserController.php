@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\User\CreateRequest;
 use App\Http\Requests\User\UpdateRequest;
+use App\Http\Resources\UserResource;
+use App\Http\Resources\UserResourceCollection;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -13,13 +15,19 @@ class UserController extends Controller
     {
 //        auth()->guard('api')->user();
 //        dd(auth()->guard('api')->user());
-        return User::all();
+        $users = User::all();
+//        $users = UserResource::collection($users);
+        $users = new UserResourceCollection($users);
+        return $users;
     }
 
 
     public function show(Request $request, $id)
     {
-        return User::findOrFail($id);
+        $user = User::findOrFail($id);
+//        UserResource::wrap('fileds');
+        $user = new UserResource($user);
+        return $user;
     }
 
 
