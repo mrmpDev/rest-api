@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Article\CreateRequest;
 use App\Http\Requests\Article\UpdateRequest;
+use App\Http\Resources\ArticleResource;
 use App\Models\Article;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -12,12 +13,13 @@ class ArticleController extends Controller
 {
     public function index(Request $request)
     {
-        return Article::all();
+        return ArticleResource::collection(Article::all());
     }
 
     public function show(Request $request, $id)
     {
-        return $article = Article::findOrFail($id);
+        $article = Article::findOrFail($id);
+        return new ArticleResource($article->load('user'));
     }
 
     public function store(CreateRequest $request)
