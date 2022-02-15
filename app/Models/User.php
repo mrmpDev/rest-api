@@ -11,7 +11,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -28,7 +28,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password', 'remember_token', 'api_token', 'email_verified_at'
+        'password', 'remember_token', 'email_verified_at'
     ];
 
     /**
@@ -46,20 +46,4 @@ class User extends Authenticatable
         return $this->hasMany(Article::class);
     }
 
-
-    public function generateToken()
-    {
-        $token = Str::random(50);
-        $this->api_token = $token;
-        $this->save();
-        return $token;
-    }
-
-    public function logout()
-    {
-
-        $this->token_api = null;
-        $this->save();
-        return $this;
-    }
 }

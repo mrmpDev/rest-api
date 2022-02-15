@@ -29,8 +29,8 @@ Route::group([], function () {
 });
 
 Route::group(['prefix' => 'users'], function () {
-//    Route::get('/', [UserController::class, 'index'])->middleware('auth:api')->name('users');
-    Route::get('/', [UserController::class, 'index'])->name('users');
+    Route::get('/', [UserController::class, 'index'])->middleware('auth:api')->name('users');
+//    Route::get('/', [UserController::class, 'index'])->name('users');
     Route::post('/', [UserController::class, 'store'])->name('user.store');
     Route::get('/{id}', [UserController::class, 'show'])->name('user.show');
     Route::put('/{userId}', [UserController::class, 'update'])->name('user.update');
