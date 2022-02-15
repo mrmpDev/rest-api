@@ -24,13 +24,13 @@ class UserTableSeeder extends Seeder
         User::create([
             'name' => 'user1',
             'email' => 'user1@webamooz.net',
-            'password' => bcrypt('password')
+            'password' => bcrypt(789654123)
         ]);
 
         User::create([
             'name' => 'user2',
             'email' => 'user2@webamooz.net',
-            'password' => bcrypt('password')
+            'password' => bcrypt(789654123)
         ]);
     }
 }

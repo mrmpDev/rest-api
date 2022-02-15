@@ -3,19 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Auth\LoginRequest;
+use Laravel\Passport\PersonalAccessTokenResult;
 
 class Authcontroller extends Controller
 {
     public function login(LoginRequest $request)
     {
+
         $user = auth()->attempt([
             'email' => $request->username,
             'password' => $request->password,
         ]);
-
         if (auth()->check()) {
+            $token = auth()->user()->createToken('password_for_user'.auth()->id());
+
             return response([
-                'token' => auth()->user()->generateToken()
+                'token' => $token->accessToken
             ]);
         }
 
